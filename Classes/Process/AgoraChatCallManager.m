@@ -782,6 +782,7 @@ static AgoraChatCallManager *agoraChatCallManager = nil;
             [weakself sendAnswerMsg:from callId:callId result:kBusyResult devId:callerDevId];
         } else {
             AgoraChatCall *call = [[AgoraChatCall alloc] init];
+
             call.callId = callId;
             call.isCaller = NO;
             call.callType = (AgoraChatCallType)[callType intValue];
@@ -789,6 +790,11 @@ static AgoraChatCallManager *agoraChatCallManager = nil;
             call.channelName = channelname;
             call.remoteUserAccount = from;
             call.ext = callExt;
+            
+            NSString *nickname = call.ext[@"nickname"];
+            [[NSUserDefaults standardUserDefaults] setObject:nickname forKey:@"agoraNickname"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            
             [weakself.modal.recvCalls setObject:call forKey:callId];
             [weakself sendAlertMsgToCaller:call.remoteUserAccount callId:callId devId:call.remoteCallDevId];
             [weakself _startAlertTimer:callId];
@@ -871,6 +877,10 @@ static AgoraChatCallManager *agoraChatCallManager = nil;
                 return;
             }
             AgoraChatCall *call = [weakself.modal.recvCalls objectForKey:callId];
+            NSString *nickName = call.ext[@"nickname"];
+            [[NSUserDefaults standardUserDefaults] setObject:nickName forKey:@"agoraNickname"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+
             if (call) {
                 if ([isValid boolValue]) {
                     weakself.modal.currentCall = call;
@@ -1370,6 +1380,9 @@ static AgoraChatCallManager *agoraChatCallManager = nil;
 
 - (BOOL)checkCallIdCanHandle:(NSString *)callId
 {
+    NSLog(@"-------------- Callid : %@", callId);
+    NSLog(@"-------------- self.modal.currentCall.callId : %@", self.modal.currentCall.callId);
+    NSLog(@"-------------- self.modal.currentCall.callId : %@", self.modal.currentCall.callId);
     return [self.modal.currentCall.callId isEqualToString:callId];
 }
 
