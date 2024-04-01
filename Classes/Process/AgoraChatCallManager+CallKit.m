@@ -60,10 +60,7 @@ static AgoraChatCallKitModel *callKitModel;
     if (pushKitRecvCallId) {
         return;
     }
-    NSString *nickName = [[NSUserDefaults standardUserDefaults]
-        stringForKey:@"agoraNickname"];
-    
-    CXHandle *handle = [[CXHandle alloc] initWithType:CXHandleTypeGeneric value:nickName];
+    CXHandle *handle = [[CXHandle alloc] initWithType:CXHandleTypeGeneric value:call.remoteUserAccount];
     CXCallUpdate *update = [[CXCallUpdate alloc] init];
     update.remoteHandle = handle;
     update.supportsHolding = NO;
@@ -71,7 +68,7 @@ static AgoraChatCallKitModel *callKitModel;
     update.supportsUngrouping = NO;
     update.supportsDTMF = NO;
     update.hasVideo = NO;
-    update.localizedCallerName = nickName;
+    update.localizedCallerName = call.remoteUserAccount;
     if (callKitCurrentCallUUID) {
         [self.provider reportCallWithUUID:callKitCurrentCallUUID endedAtDate:nil reason:CXCallEndedReasonUnanswered];
     }
@@ -181,12 +178,10 @@ static AgoraChatCallKitModel *callKitModel;
 
 - (void)pushRegistry:(PKPushRegistry *)registry didReceiveIncomingPushWithPayload:(PKPushPayload *)payload forType:(PKPushType)type withCompletionHandler:(void (^)(void))completion
 {
-    NSString *nickname = [[NSUserDefaults standardUserDefaults]
-        stringForKey:@"agoraNickname"];
     NSString *from = payload.dictionaryPayload[@"f"];
     NSDictionary *custom = payload.dictionaryPayload[@"e"];
     NSString *callId = custom[@"callId"];
-    CXHandle *handle = [[CXHandle alloc] initWithType:CXHandleTypeGeneric value:nickname];
+    CXHandle *handle = [[CXHandle alloc] initWithType:CXHandleTypeGeneric value:from];
     CXCallUpdate *update = [[CXCallUpdate alloc] init];
     update.remoteHandle = handle;
     update.supportsHolding = NO;
@@ -194,10 +189,9 @@ static AgoraChatCallKitModel *callKitModel;
     update.supportsUngrouping = NO;
     update.supportsDTMF = NO;
     update.hasVideo = NO;
-    update.localizedCallerName = nickname;
+    update.localizedCallerName = from;
     
-    pushKitRecvCallId = callId; 
-    
+    pushKitRecvCallId = callId;
     callKitModel = [[AgoraChatCallKitModel alloc] init];
     callKitModel.unhandleCallId = callId;
     callKitModel.handleType = AgoraChatCallKitModelHandleTypeUnhandle;

@@ -280,6 +280,7 @@
 {
     self.enableCameraButton.selected = !self.enableCameraButton.isSelected;
     int state = [AgoraChatCallManager.sharedManager muteLocalVideoStream:self.enableCameraButton.selected];
+    NSLog(@"%d", state);
 }
 
 - (void)miniAction
