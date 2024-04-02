@@ -70,7 +70,7 @@ static AgoraChatCallKitModel *callKitModel;
     update.supportsGrouping = NO;
     update.supportsUngrouping = NO;
     update.supportsDTMF = NO;
-    update.hasVideo = NO;
+    update.hasVideo = TRUE;
     update.localizedCallerName = nickName;
     if (callKitCurrentCallUUID) {
         [self.provider reportCallWithUUID:callKitCurrentCallUUID endedAtDate:nil reason:CXCallEndedReasonUnanswered];
@@ -193,7 +193,7 @@ static AgoraChatCallKitModel *callKitModel;
     update.supportsGrouping = NO;
     update.supportsUngrouping = NO;
     update.supportsDTMF = NO;
-    update.hasVideo = NO;
+    update.hasVideo = TRUE;
     update.localizedCallerName = nickname;
     
     pushKitRecvCallId = callId; 
