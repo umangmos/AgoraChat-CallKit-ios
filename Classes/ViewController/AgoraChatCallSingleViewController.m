@@ -50,16 +50,16 @@
     
     [self.contentView insertSubview:self.remoteView atIndex:0];
 
-    _recallButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_recallButton setImage:[UIImage agoraChatCallKit_imageNamed:@"call_recall"] forState:UIControlStateNormal];
-    [_recallButton addTarget:self action:@selector(recallAction) forControlEvents:UIControlEventTouchUpInside];
-    [self.contentView addSubview:_recallButton];
+//    _recallButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [_recallButton setImage:[UIImage agoraChatCallKit_imageNamed:@"call_recall"] forState:UIControlStateNormal];
+//    [_recallButton addTarget:self action:@selector(recallAction) forControlEvents:UIControlEventTouchUpInside];
+//    [self.contentView addSubview:_recallButton];
     
-    UILabel *recallLabel = [[UILabel alloc] init];
-    recallLabel.textColor = UIColor.whiteColor;
-    recallLabel.font = [UIFont systemFontOfSize:14];
-    recallLabel.text = AgoraChatCallLocalizableString(@"Redial", nil);
-    [_recallButton addSubview:recallLabel];
+//    UILabel *recallLabel = [[UILabel alloc] init];
+//    recallLabel.textColor = UIColor.whiteColor;
+//    recallLabel.font = [UIFont systemFontOfSize:14];
+//    recallLabel.text = AgoraChatCallLocalizableString(@"Redial", nil);
+//    [_recallButton addSubview:recallLabel];
     
     _closeButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [_closeButton setImage:[UIImage agoraChatCallKit_imageNamed:@"call_close"] forState:UIControlStateNormal];
@@ -72,27 +72,28 @@
     closeLabel.text = AgoraChatCallLocalizableString(@"Close", nil);
     [_closeButton addSubview:closeLabel];
     
-    [_recallButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(@60);
-        make.bottom.equalTo(self.buttonView);
-        make.width.height.equalTo(@64);
-    }];
+//    [_recallButton mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.equalTo(@60);
+//        make.bottom.equalTo(self.buttonView);
+//        make.width.height.equalTo(@64);
+//    }];
     
     [_closeButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(@-60);
+//        make.right.equalTo(@-60);
+        make.centerX.equalTo(self.buttonView);
         make.bottom.equalTo(self.buttonView);
         make.width.height.equalTo(@64);
     }];
     
-    [recallLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(_recallButton);
-        make.top.equalTo(_recallButton.mas_bottom).offset(9);
-    }];
-    
-    [closeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(_closeButton);
-        make.top.equalTo(recallLabel);
-    }];
+//    [recallLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerX.equalTo(_recallButton);
+//        make.top.equalTo(_recallButton.mas_bottom).offset(9);
+//    }];
+//
+//    [closeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerX.equalTo(_closeButton);
+//        make.top.equalTo(recallLabel);
+//    }];
     
     [self.contentView addSubview:self.localView];
     [self setupLocalVideo];
